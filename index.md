@@ -11,6 +11,6 @@ Overview of IaC solutions for Azure
 ----
 
 
-[Terraform button](./terraform)
-[Bicep](./bicep)
-[Comparison](./comparison)
+[Terraform](./terraform)  
+[Bicep](./bicep)  
+[Comparison](./comparison)  
