@@ -1,5 +1,5 @@
 ---
-title: IaC for Azure
+title: Home
 layout: home
 nav_order: 1
 description: "An overview of IaC solutions on Azure"
@@ -11,6 +11,6 @@ Overview of IaC solutions for Azure
 ----
 
 
-[Terraform](./terraform)
+[Terraform button](./terraform)
 [Bicep](./bicep)
 [Comparison](./comparison)
