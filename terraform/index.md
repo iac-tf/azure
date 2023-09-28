@@ -1,6 +1,6 @@
 ---
 title: Terraform
-layout: default
+layout: post
 nav_order: 3
 has_children: true
 ---

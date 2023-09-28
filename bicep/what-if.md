@@ -1,6 +1,6 @@
 ---
 title: What If
-layout: default
+layout: post
 parent: Bicep
 ---
 
