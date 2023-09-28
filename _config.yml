@@ -1,1 +1,9 @@
+title: IaC for Azure
+description: An overview of IaC solutions for Azure
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://azure.iac.tf" # the base hostname & protocol for your site, e.g. http://example.com
+repository: iac-tf/azure # for github-metadata
+
+permalink: pretty
+
 theme: just-the-docs
