@@ -12,6 +12,7 @@ However in the end Bicep is compiled to ARM templates so every limitation of ARM
 ## Pros
 * Natively supported by Azure
 * Based on hashicorp HCL & easier compared to JSON in ARM templates
+* Provides a registry solution for centralized templates
 
 ## Cons
 * What-If is not that great
