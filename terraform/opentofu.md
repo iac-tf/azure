@@ -1,6 +1,7 @@
 ---
 title: OpenToFu
 layout: post
+parent: Terraform
 ---
 OpenToFu is a fork of the main Terraform branch.
 Hashicorp chose to switch from MPL to BSL license. 
