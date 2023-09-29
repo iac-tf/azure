@@ -17,4 +17,5 @@ The main power comes from the multi provider support.
 
 
 ## Links
-[Terraform Registry](https://registry.terraform.io){: .btn .btn-blue }
+[Terraform Registry](https://registry.terraform.io){: .btn .btn-blue }  
+[Terraform Docs](https://developer.hashicorp.com/terraform/docs){: .btn .btn-blue }

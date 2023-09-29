@@ -5,7 +5,7 @@ nav_order: 4
 has_children: true
 ---
 
-| head1                 | Bicep                   | Terraform |
+|                  | Bicep                   | Terraform |
 |:-------------         |:------------------      |:------|
 | Rendering Changes     | what-if `limited`       | plans  |
 | Supported Providers   | Azure, AzureAD `beta`   | many, BYO  |
