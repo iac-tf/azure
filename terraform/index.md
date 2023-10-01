@@ -10,6 +10,7 @@ The main power comes from the multi provider support.
 * Multiple providers
 * Great planning functionality
 * HCL is one of the better notation methods without using a full programming language.
+* Module support
 
 ## Cons
 * State store 
