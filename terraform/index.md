@@ -25,7 +25,7 @@ Terraform (by HashiCorp) uses **HashiCorp Configuration Language (HCL)** to prov
 ## Cons
 * State store — requires a shared remote backend (e.g. Azure Blob Storage) for team use; state locking is critical
 * Importing when in brown-field — `terraform import` works but mapping existing resources to HCL is tedious
-* Azure day-0 lag — new Azure features may take days or weeks to appear in the `azurerm` provider
+* Azure day-0 lag — new Azure features may take days or weeks to appear in the `azurerm` provider; mitigated by the [`azapi` provider](./azapi) (maintained by Microsoft, day-0 coverage)
 * BSL license (Terraform ≥ 1.6) — HashiCorp's license restricts use in competing products (reason OpenTofu was forked)
 
 ## Quick Example
@@ -65,4 +65,15 @@ terraform apply
 [Terraform Registry](https://registry.terraform.io){: .btn .btn-blue }  
 [Terraform Docs](https://developer.hashicorp.com/terraform/docs){: .btn .btn-blue }
 [Azure Provider Docs](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs){: .btn .btn-blue }
+
+## Azure Providers
+
+There are two Terraform providers for Azure:
+
+| Provider | Maintained by | Day-0 | Field names |
+|---|---|---|---|
+| `azurerm` | HashiCorp | No — lag possible | Custom HCL-friendly names |
+| `azapi` | Microsoft | Yes — same API as ARM/Bicep | Mirror ARM/Bicep API names |
+
+See the [azapi page](./azapi) for details on using both providers together.
 

@@ -7,22 +7,23 @@ nav_order: 4
 
 ## Feature Matrix
 
-|                        | ARM Templates              | Bicep                        | Terraform / OpenTofu          |
-|:-----------------------|:---------------------------|:-----------------------------|:------------------------------|
-| **Language**           | JSON                       | Bicep DSL                    | HCL                           |
-| **Maintained by**      | Microsoft                  | Microsoft                    | HashiCorp / OpenTofu          |
-| **License**            | Free                       | Free / MIT                   | BSL (Terraform) / MPL (OpenTofu) |
-| **Azure-native**       | Yes                        | Yes                          | Yes (via `azurerm` provider)  |
-| **Multi-cloud**        | No                         | No                           | Yes                           |
-| **State file**         | No                         | No                           | Yes                           |
-| **Day-0 coverage**     | Full                       | Full                         | Provider lag possible         |
-| **Plan preview**       | `--what-if`                | `--what-if`                  | `terraform plan`              |
-| **Loops**              | `copy` element             | `for` expression             | `for_each` / `count`          |
-| **Conditions**         | `condition` element        | `if` expression              | `count = cond ? 1 : 0`        |
-| **Modules / reuse**    | Linked templates           | Modules + Registry           | Modules + Registry            |
-| **IDE support**        | Good                       | Excellent                    | Excellent                     |
-| **Learning curve**     | Steep                      | Moderate                     | Moderate                      |
-| **Community**          | Large                      | Medium (growing)             | Very large                    |
+|                        | ARM Templates              | Bicep                        | Terraform (`azurerm`)         | Terraform (`azapi`)           |
+|:-----------------------|:---------------------------|:-----------------------------|:------------------------------|:------------------------------|
+| **Language**           | JSON                       | Bicep DSL                    | HCL                           | HCL                           |
+| **Maintained by**      | Microsoft                  | Microsoft                    | HashiCorp / OpenTofu          | Microsoft                     |
+| **License**            | Free                       | Free / MIT                   | BSL (Terraform) / MPL (OpenTofu) | MPL 2.0                    |
+| **Azure-native**       | Yes                        | Yes                          | Yes (via `azurerm` provider)  | Yes (via `azapi` provider)    |
+| **Multi-cloud**        | No                         | No                           | Yes                           | Azure only                    |
+| **State file**         | No                         | No                           | Yes                           | Yes                           |
+| **Day-0 coverage**     | Full                       | Full                         | Provider lag possible         | Full — mirrors ARM/Bicep API  |
+| **Field names**        | ARM API names              | ARM API names                | Custom HCL-friendly names     | ARM API names (Bicep-aligned) |
+| **Plan preview**       | `--what-if`                | `--what-if`                  | `terraform plan`              | `terraform plan`              |
+| **Loops**              | `copy` element             | `for` expression             | `for_each` / `count`          | `for_each` / `count`          |
+| **Conditions**         | `condition` element        | `if` expression              | `count = cond ? 1 : 0`        | `count = cond ? 1 : 0`        |
+| **Modules / reuse**    | Linked templates           | Modules + Registry           | Modules + Registry            | Modules + Registry            |
+| **IDE support**        | Good                       | Excellent                    | Excellent                     | Good                          |
+| **Learning curve**     | Steep                      | Moderate                     | Moderate                      | Low for Bicep users           |
+| **Community**          | Large                      | Medium (growing)             | Very large                    | Small (growing)               |
 
 ## Plans vs What-If
 
@@ -99,7 +100,7 @@ az deployment group create --resource-group my-rg \
   --template-file storage.bicep --parameters storageAccountName=myaccount
 ```
 
-### Terraform (~17 lines)
+### Terraform / azurerm (~17 lines)
 
 ```hcl
 variable "storage_account_name" { type = string }
@@ -123,12 +124,43 @@ resource "azurerm_storage_account" "main" {
 terraform init && terraform apply -var="storage_account_name=myaccount"
 ```
 
+### Terraform / azapi (~18 lines)
+
+```hcl
+variable "storage_account_name" { type = string }
+variable "resource_group_id"    { type = string }
+variable "location"             { type = string; default = "westeurope" }
+
+resource "azapi_resource" "storage" {
+  type      = "Microsoft.Storage/storageAccounts@2023-01-01"
+  name      = var.storage_account_name
+  location  = var.location
+  parent_id = var.resource_group_id
+
+  body = {
+    sku        = { name = "Standard_LRS" }
+    kind       = "StorageV2"
+    properties = {
+      minimumTlsVersion        = "TLS1_2"
+      allowBlobPublicAccess    = false
+      supportsHttpsTrafficOnly = true
+    }
+  }
+}
+```
+
+```bash
+terraform init && terraform apply -var="storage_account_name=myaccount"
+```
+
+Field names mirror the Bicep/ARM API exactly — `minimumTlsVersion` instead of `min_tls_version`, `allowBlobPublicAccess` instead of `allow_nested_items_to_be_public`. See the [azapi page](../terraform/azapi) for more details.
+
 ## Multiple files visibility
 W.I.P.
 
 ## Supported resources/providers
 ### Support for new resources
-New Azure features appear in ARM and Bicep on day 0 — the moment Microsoft ships the feature, the ARM API supports it. Terraform's `azurerm` provider typically follows within days to weeks, depending on provider maintainer availability.
+New Azure features appear in ARM and Bicep on day 0 — the moment Microsoft ships the feature, the ARM API supports it. Terraform's `azurerm` provider typically follows within days to weeks, depending on provider maintainer availability. The **`azapi` provider** (maintained by Microsoft) closes this gap entirely by calling the ARM REST API directly, providing the same day-0 coverage as ARM and Bicep — at the cost of higher verbosity and less abstraction. See the [azapi page](../terraform/azapi).
 
 ### Support for many providers
 Only Terraform / OpenTofu supports managing resources outside of Azure in the same workflow. Popular non-Azure providers include `aws`, `google`, `kubernetes`, `helm`, `vault`, `datadog`, and hundreds more.
