@@ -1,1 +1,25 @@
+title: IaC for Azure
+description: An overview of IaC solutions for Azure
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://azure.iac.tf" # the base hostname & protocol for your site, e.g. http://example.com
+repository: iac-tf/azure # for github-metadata
+
+permalink: pretty
+
 theme: just-the-docs
+
+search_enabled: true
+heading_anchors: true
+back_to_top: true
+back_to_top_text: "Back to top"
+
+aux_links:
+  "GitHub":
+    - "https://github.com/iac-tf/azure"
+
+gh_edit_link: true # show or hide edit this page link
+gh_edit_link_text: "Edit this page on GitHub."
+gh_edit_repository: "https://github.com/iac-tf/azure" # the github URL for your repo
+gh_edit_branch: "dev/docs" # the branch that your docs is served from
+# gh_edit_source: docs # the source that your files originate from
+gh_edit_view_mode: "edit" # "tree" or "edit" if you want the user to jump into the editor immediately
