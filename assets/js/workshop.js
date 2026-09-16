@@ -117,21 +117,44 @@
 
   /* ---------------- Lab ---------------- */
 
+  var CM_BASE = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/";
+
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var script = document.createElement("script");
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  function loadStylesheet(href) {
+    return new Promise(function (resolve, reject) {
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = href;
+      link.onload = resolve;
+      link.onerror = reject;
+      document.head.appendChild(link);
+    });
+  }
+
   var codeMirrorLoading = null;
   function loadCodeMirror() {
     if (window.CodeMirror) return Promise.resolve();
     if (codeMirrorLoading) return codeMirrorLoading;
-    codeMirrorLoading = new Promise(function (resolve, reject) {
-      var link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css";
-      document.head.appendChild(link);
-
-      var script = document.createElement("script");
-      script.src = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js";
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
+    // Wait for the stylesheet AND the core script before letting any editor
+    // be constructed: CodeMirror measures character/line metrics from the
+    // CSS as soon as it is instantiated, so creating one before the
+    // stylesheet has actually applied produces a garbled, overlapping
+    // single-line render. The JS mode (for JSON/HCL syntax awareness) can
+    // only be registered once the core script has run, so it's loaded last.
+    codeMirrorLoading = Promise.all([
+      loadStylesheet(CM_BASE + "codemirror.min.css"),
+      loadScript(CM_BASE + "codemirror.min.js")
+    ]).then(function () {
+      return loadScript(CM_BASE + "mode/javascript/javascript.js");
     });
     return codeMirrorLoading;
   }
@@ -149,11 +172,23 @@
 
     var editor;
     if (window.CodeMirror) {
+      // The javascript mode is a reasonable stand-in for HCL/Bicep too:
+      // CodeMirror 5 has no official HCL mode on the CDN, and JS tokenizing
+      // still highlights strings, comments, numbers and braces sensibly.
+      var mode = root.dataset.lang === "json" ? "application/json" : "javascript";
       editor = window.CodeMirror(mount, {
         value: starter,
+        mode: mode,
         lineNumbers: true,
         tabSize: 2,
         viewportMargin: Infinity
+      });
+      // Re-measure on the next frame: by the time we get here the
+      // stylesheet has loaded, but forcing a refresh guards against any
+      // layout that was still settling (e.g. web fonts) when the editor
+      // was constructed.
+      requestAnimationFrame(function () {
+        editor.refresh();
       });
     } else {
       // CDN unreachable: fall back to a plain textarea, still fully usable.
