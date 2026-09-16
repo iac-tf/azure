@@ -12,13 +12,17 @@ redirect_from:
 
 <div class="workshop-slides" markdown="1">
 
+## Should You Learn ARM?
+
+**Short on time? Bicep (the next module) supersedes ARM for anything you'd hand-write today** — it compiles straight to ARM, so you lose nothing by starting there instead. This module is here because Bicep *is* ARM underneath, existing ARM templates are still common in the wild, and every limitation covered here still applies to Bicep too. Treat it as reference material you can skip on a first pass and come back to.
+
 ## What Are ARM Templates?
 
 ARM (Azure Resource Manager) Templates are the **native JSON-based IaC format** for Azure. Every Bicep file, every Terraform `azurerm` resource, and every portal deployment ultimately compiles down to an ARM Template before Azure processes it.
 
 ARM Templates are JSON files that declare the resources you want to deploy, their properties, and the dependencies between them. They are submitted directly to the Azure Resource Manager API — the same API the Azure portal uses.
 
-Key characteristics:
+## Key Characteristics
 
 * **Declarative** — describe *what* you want, not *how* to create it
 * **Idempotent** — running the same template multiple times produces the same result

@@ -1,7 +1,17 @@
+{% capture newline %}
+{% endcapture %}
 <div class="workshop-lab" id="{{ include.id }}" data-lang="{{ include.lang }}" data-checks='{{ include.checks | escape }}'>
   <div class="workshop-lab-title">&#129514; Lab &mdash; {{ include.title }}</div>
   <div class="workshop-lab-task">{{ include.task | markdownify }}</div>
-  <textarea class="workshop-lab-starter" hidden>{{ include.starter | escape }}</textarea>
+  {%- comment -%}
+    kramdown treats <textarea> as inline/span-level HTML: it reflows literal
+    newlines into a single paragraph line and collapses runs of spaces, same
+    as it would for any other markdown text. Encoding both as character
+    references sidesteps that entirely: neither survives as literal
+    whitespace for kramdown to normalize, and the browser decodes them back
+    to real spaces/newlines when it parses the textarea's (RCDATA) content.
+  {%- endcomment -%}
+  <textarea class="workshop-lab-starter" hidden>{{ include.starter | escape | replace: " ", "&#32;" | replace: newline, "&#10;" }}</textarea>
   <div class="workshop-lab-cm-mount"></div>
   <div class="workshop-lab-actions">
     <button type="button" class="btn btn-blue workshop-lab-check">Check my answer</button>

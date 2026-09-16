@@ -28,9 +28,9 @@ There's no login and nothing is saved between visits — refreshing a page reset
     <div class="workshop-module-card-desc">Pros, cons, and the vocabulary (declarative, idempotent, drift) the rest of the workshop assumes.</div>
   </a>
   <a class="workshop-module-card" href="{{ '/workshop/arm-templates/' | relative_url }}">
-    <div class="workshop-module-card-num">Module 1</div>
+    <div class="workshop-module-card-num">Module 1 &middot; optional</div>
     <div class="workshop-module-card-title">ARM Templates</div>
-    <div class="workshop-module-card-desc">Azure's native JSON format — what everything else compiles down to.</div>
+    <div class="workshop-module-card-desc">Azure's native JSON format — what everything else compiles down to. Short on time? Skip to Bicep.</div>
   </a>
   <a class="workshop-module-card" href="{{ '/workshop/bicep/' | relative_url }}">
     <div class="workshop-module-card-num">Module 2</div>

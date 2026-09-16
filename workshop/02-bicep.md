@@ -73,6 +73,8 @@ az deployment group what-if \
   --parameters @main.bicepparam
 ```
 
+## What-If: Reading the Output
+
 | Symbol | Meaning |
 |--------|---------|
 | `+` | Resource will be **created** |
@@ -82,7 +84,9 @@ az deployment group what-if \
 | `=` | No change |
 | `?` | Unsure / noisy diff |
 
-What-If has known gaps: noisy diffs (properties shown as modified when they haven't changed, due to API defaults being written back), limited awareness of nested/linked deployments, and no guaranteed ordering in the output. This is why many teams consider `terraform plan` the stronger preview experience — Microsoft keeps improving What-If with each ARM API version.
+## What-If: Known Gaps
+
+Noisy diffs (properties shown as modified when they haven't changed, due to API defaults being written back), limited awareness of nested/linked deployments, and no guaranteed ordering in the output. This is why many teams consider `terraform plan` the stronger preview experience — Microsoft keeps improving What-If with each ARM API version.
 
 ## Installing the Bicep CLI
 
