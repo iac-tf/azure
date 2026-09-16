@@ -6,7 +6,19 @@ description: "An overview of IaC solutions on Azure"
 permalink: /
 ---
 
-Overview of IaC solutions for Azure — compare **ARM Templates**, **Bicep**, and **Terraform / OpenTofu** side by side.
+Overview of IaC solutions for Azure — compare **ARM Templates**, **Bicep**, and **Terraform / OpenTofu** side by side, or work through the hands-on workshop below.
+
+----
+
+<div class="workshop-cta" markdown="1">
+
+### New here? Start the workshop
+
+An interactive, self-paced tour: slides, docs, in-browser labs, and quizzes for every tool on this page — no login, nothing tracked.
+
+[Start the Workshop &rarr;](./workshop/){: .btn .btn-blue }
+
+</div>
 
 ----
 
@@ -17,6 +29,8 @@ Overview of IaC solutions for Azure — compare **ARM Templates**, **Bicep**, an
 - **Automation** — integrate deployments into CI/CD pipelines.
 - **Documentation** — the config files *are* the living documentation.
 - **Drift detection** — know when actual state diverges from desired state.
+
+Pros and cons don't stop there — module 0 of the workshop, [Why IaC](./workshop/why-iac/), covers the full list, including the honest trade-offs.
 
 ----
 
@@ -37,15 +51,15 @@ Overview of IaC solutions for Azure — compare **ARM Templates**, **Bicep**, an
 
 ## Choosing the Right Tool
 
-- **Azure-only shop, want the best native experience?** → [Bicep](./bicep)
-- **Already using Terraform across multiple clouds?** → [Terraform / OpenTofu](./terraform)
-- **Need raw API access or maintaining existing pipelines?** → [ARM Templates](./arm)
-- **Migrating from ARM to something more readable?** → [Bicep](./bicep) is a natural step — Bicep compiles directly to ARM.
+- **Azure-only shop, want the best native experience?** → [Bicep](./workshop/bicep/)
+- **Already using Terraform across multiple clouds?** → [Terraform / OpenTofu](./workshop/terraform/)
+- **Need raw API access or maintaining existing pipelines?** → [ARM Templates](./workshop/arm-templates/)
+- **Migrating from ARM to something more readable?** → [Bicep](./workshop/bicep/) is a natural step — Bicep compiles directly to ARM.
 
 ----
 
-[ARM Templates](./arm){: .btn .btn-blue }
-[Bicep](./bicep){: .btn .btn-blue }
-[Terraform](./terraform){: .btn .btn-blue }
-[Comparison](./comparison){: .btn .btn-outline }
-  
+[ARM Templates](./workshop/arm-templates/){: .btn .btn-blue }
+[Bicep](./workshop/bicep/){: .btn .btn-blue }
+[Terraform](./workshop/terraform/){: .btn .btn-blue }
+[Comparison](./workshop/comparison/){: .btn .btn-outline }
+

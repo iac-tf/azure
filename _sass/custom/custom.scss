@@ -1,0 +1,306 @@
+// Workshop components: toolbar, present mode, lab, quiz, module grid.
+// Reuses just-the-docs variables ($border-radius, $blue-*, $border-color, etc.)
+// so it inherits the site's look without hardcoding a second palette.
+
+.workshop-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: $sp-4;
+}
+
+.workshop-present-btn {
+  font-weight: 600;
+}
+
+// ---- Present mode overlay -------------------------------------------------
+
+.workshop-present-overlay {
+  position: fixed;
+  z-index: 999;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: $sp-6 $sp-8;
+  background-color: $body-background-color;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.workshop-present-chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $sp-4;
+}
+
+.workshop-present-counter {
+  color: $grey-dk-000;
+  font-size: $font-size-3;
+}
+
+.workshop-present-close {
+  padding: $sp-2 $sp-3;
+  color: $body-text-color;
+  cursor: pointer;
+  background: none;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+
+  &:hover {
+    background-color: $sidebar-color;
+  }
+}
+
+.workshop-present-slide {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+  overflow-y: auto;
+
+  h2 {
+    margin-top: 0;
+    font-size: $font-size-9;
+  }
+}
+
+.workshop-present-nav {
+  display: flex;
+  justify-content: center;
+  gap: $sp-4;
+  margin-top: $sp-4;
+}
+
+// ---- Lab --------------------------------------------------------------
+
+.workshop-lab {
+  padding: $sp-5;
+  margin: $sp-6 0;
+  background-color: $sidebar-color;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+}
+
+.workshop-lab-title,
+.workshop-quiz-title {
+  margin-bottom: $sp-3;
+  font-size: $font-size-6;
+  font-weight: 600;
+}
+
+.workshop-lab-task {
+  margin-bottom: $sp-4;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.workshop-lab-cm-mount {
+  margin-bottom: $sp-3;
+  overflow: hidden;
+  border-radius: $border-radius;
+
+  .CodeMirror {
+    height: auto;
+    min-height: 8rem;
+    font-family: $mono-font-family;
+    font-size: $font-size-4;
+  }
+}
+
+.workshop-lab-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $sp-3;
+  margin-bottom: $sp-3;
+}
+
+.workshop-lab-results {
+  margin-bottom: $sp-3;
+}
+
+.workshop-lab-result-item {
+  padding: $sp-2 $sp-3;
+  margin-bottom: $sp-2;
+  font-size: $font-size-4;
+  border-radius: $border-radius;
+
+  &.pass {
+    color: $green-300;
+    background-color: rgba($green-000, 0.15);
+  }
+
+  &.fail {
+    color: $red-300;
+    background-color: rgba($red-000, 0.15);
+  }
+}
+
+.workshop-lab-result-banner {
+  padding: $sp-3;
+  margin-bottom: $sp-2;
+  font-weight: 600;
+  border-radius: $border-radius;
+
+  &.pass {
+    color: $green-300;
+    background-color: rgba($green-000, 0.2);
+  }
+
+  &.fail {
+    color: $red-300;
+    background-color: rgba($red-000, 0.2);
+  }
+}
+
+.workshop-lab-solution {
+  padding: $sp-4;
+  margin: 0;
+  background-color: $code-background-color;
+  border-radius: $border-radius;
+
+  &[hidden] {
+    display: none;
+  }
+
+  code {
+    color: $grey-lt-000;
+    background-color: transparent;
+  }
+}
+
+// ---- Quiz ---------------------------------------------------------------
+
+.workshop-quiz {
+  padding: $sp-5;
+  margin: $sp-6 0;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+}
+
+.workshop-quiz-score {
+  margin-bottom: $sp-4;
+  font-weight: 600;
+}
+
+.workshop-quiz-question {
+  padding-bottom: $sp-4;
+  margin-bottom: $sp-4;
+  border-bottom: 1px solid $border-color;
+
+  &:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: 0;
+  }
+}
+
+.workshop-quiz-question-text {
+  margin-bottom: $sp-3;
+  font-weight: 600;
+}
+
+.workshop-quiz-choice {
+  display: block;
+  width: 100%;
+  padding: $sp-2 $sp-3;
+  margin-bottom: $sp-2;
+  text-align: left;
+  cursor: pointer;
+  background-color: $sidebar-color;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+
+  &:hover:not(:disabled) {
+    background-color: darken($sidebar-color, 3%);
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &.correct {
+    color: $green-300;
+    background-color: rgba($green-000, 0.2);
+    border-color: $green-000;
+  }
+
+  &.incorrect {
+    color: $red-300;
+    background-color: rgba($red-000, 0.2);
+    border-color: $red-000;
+  }
+}
+
+.workshop-quiz-explain {
+  padding: $sp-3;
+  margin-top: $sp-2;
+  font-size: $font-size-4;
+  background-color: $sidebar-color;
+  border-radius: $border-radius;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+// ---- Module grid (workshop landing page) --------------------------------
+
+.workshop-module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: $sp-4;
+  margin: $sp-5 0;
+}
+
+.workshop-module-card {
+  display: block;
+  padding: $sp-4;
+  color: $body-text-color;
+  text-decoration: none;
+  background-color: $sidebar-color;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+
+  &:hover {
+    border-color: $link-color;
+  }
+}
+
+.workshop-module-card-num {
+  color: $link-color;
+  font-size: $font-size-3;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.workshop-module-card-title {
+  margin: $sp-2 0;
+  font-size: $font-size-5;
+  font-weight: 600;
+}
+
+.workshop-module-card-desc {
+  color: $grey-dk-000;
+  font-size: $font-size-4;
+}
+
+// ---- Homepage CTA ---------------------------------------------------------
+
+.workshop-cta {
+  padding: $sp-6;
+  margin: $sp-6 0;
+  text-align: center;
+  background-color: $sidebar-color;
+  border-radius: $border-radius;
+
+  .btn {
+    padding: 0.5em 1.5em;
+    font-size: $font-size-5;
+  }
+}
