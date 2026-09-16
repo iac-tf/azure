@@ -19,20 +19,26 @@ Two words come up constantly in IaC, and the rest of this workshop assumes you k
 * **Declarative** — you describe the *end state* you want ("a Standard_LRS storage account named `x` exists"), not the step-by-step commands to get there. The tool figures out the "how."
 * **Idempotent** — running the same deployment twice with no code changes produces the same result both times. No duplicate resources, no errors on the second run.
 
-## Pros of IaC (as a practice, not any one tool)
+## Pros of IaC (1/2)
 
 * **Repeatability** — spin up an identical dev, staging, or DR environment from the same source, instead of hoping a human clicked the same 40 portal settings correctly twice.
 * **Version control** — every infrastructure change has a diff, an author, a timestamp, and (ideally) a PR review — the same accountability you already expect from application code.
 * **Automation / CI/CD** — deployments can run in a pipeline on merge, instead of a person following a runbook at 5pm on a Friday.
+
+## Pros of IaC (2/2)
+
 * **Documentation that can't go stale** — the config files *are* the infrastructure. There's no separate wiki page describing "how prod is set up" that quietly drifts out of date.
 * **Faster, safer recovery** — if a resource (or an entire environment) is deleted, IaC lets you redeploy from code instead of reconstructing it from memory or old screenshots.
 * **Blast-radius control** — plan/what-if previews (covered in every module from here on) tell you exactly what a change will do *before* it touches anything.
 
-## Cons of IaC (the honest list)
+## Cons of IaC (1/2)
 
 * **Learning curve** — a new language (HCL, Bicep, JSON) and a new mental model (declarative vs. imperative) for every engineer touching infrastructure.
 * **Tooling and process overhead** — someone has to own the pipeline, the state backend (for Terraform), secrets, and access control. It's not "free" compared to a person clicking the portal for a single one-off resource.
 * **Drift management** — the moment someone (or some other automation) changes a resource outside of IaC, your code and reality disagree. See the lab below.
+
+## Cons of IaC (2/2)
+
 * **Upfront investment** — writing good, reusable, parameterized modules takes real time; it's easy to underestimate for a "quick" project.
 * **Blast radius cuts both ways** — a bad `apply` can change or delete far more than a bad portal click, precisely *because* it's automated and can act on many resources at once. Previews and reviews mitigate this, but don't eliminate it.
 * **Abstraction leaks** — every tool in this workshop has gaps where it lags the underlying cloud API (most visible in the [azapi module](../azapi/)) or where its preview isn't 100% accurate.

@@ -76,12 +76,16 @@ terraform apply
 2. **State file** — what Terraform last deployed (`.tfstate`)
 3. **Live infrastructure** — the actual current state in Azure (via a refresh)
 
+## `terraform plan` Commands
+
 ```bash
 terraform plan                       # print to console
 terraform plan -out=tfplan           # save for later apply
 terraform apply tfplan               # apply the saved plan exactly, no re-prompt
 terraform plan -target=azurerm_storage_account.main   # scope to one resource
 ```
+
+## Plan vs What-If
 
 | | `terraform plan` | `az deployment ... --what-if` |
 |---|---|---|

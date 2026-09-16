@@ -18,6 +18,8 @@ The **`azapi` provider** is a thin Terraform provider maintained by Microsoft th
 
 The `azurerm` provider (by HashiCorp) wraps the Azure API behind its own HCL-friendly field names and abstractions. That abstraction is convenient but introduces a lag: a new Azure feature has to be implemented in the provider before you can use it in Terraform. `azapi` skips that layer entirely.
 
+## azurerm vs azapi
+
 | | `azurerm` | `azapi` |
 |---|---|---|
 | **Maintained by** | HashiCorp | Microsoft |
@@ -67,6 +69,8 @@ The recommended pattern:
 * Use **`azurerm`** for stable, well-supported resources where its abstractions save time.
 * Use **`azapi`** for new/preview features not yet in `azurerm`, or when you need exact API control.
 * Use **`azapi_update_resource`** to set properties on an `azurerm`-managed resource that `azurerm` doesn't expose yet.
+
+## Patching an azurerm Resource
 
 ```hcl
 # Core resource via azurerm

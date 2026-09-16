@@ -12,7 +12,7 @@ redirect_from:
 
 <div class="workshop-slides" markdown="1">
 
-## Feature Matrix
+## Feature Matrix: Language & Governance
 
 |                        | ARM Templates              | Bicep                        | Terraform (`azurerm`)         | Terraform (`azapi`)           |
 |:-----------------------|:---------------------------|:-----------------------------|:------------------------------|:------------------------------|
@@ -22,11 +22,21 @@ redirect_from:
 | **Azure-native**       | Yes                        | Yes                          | Yes (via `azurerm` provider)  | Yes (via `azapi` provider)    |
 | **Multi-cloud**        | No                         | No                           | Yes                           | Azure only                    |
 | **State file**         | No                         | No                           | Yes                           | Yes                           |
+
+## Feature Matrix: Day-0 & Syntax
+
+|                        | ARM Templates              | Bicep                        | Terraform (`azurerm`)         | Terraform (`azapi`)           |
+|:-----------------------|:---------------------------|:-----------------------------|:------------------------------|:------------------------------|
 | **Day-0 coverage**     | Full                       | Full                         | Provider lag possible         | Full — mirrors ARM/Bicep API  |
 | **Field names**        | ARM API names              | ARM API names                | Custom HCL-friendly names     | ARM API names (Bicep-aligned) |
 | **Plan preview**       | `--what-if`                | `--what-if`                  | `terraform plan`              | `terraform plan`              |
-| **Loops**               | `copy` element             | `for` expression             | `for_each` / `count`          | `for_each` / `count`          |
+| **Loops**              | `copy` element              | `for` expression             | `for_each` / `count`          | `for_each` / `count`          |
 | **Conditions**         | `condition` element        | `if` expression              | `count = cond ? 1 : 0`        | `count = cond ? 1 : 0`        |
+
+## Feature Matrix: Tooling & Ecosystem
+
+|                        | ARM Templates              | Bicep                        | Terraform (`azurerm`)         | Terraform (`azapi`)           |
+|:-----------------------|:---------------------------|:-----------------------------|:------------------------------|:------------------------------|
 | **Modules / reuse**    | Linked templates           | Modules + Registry           | Modules + Registry            | Modules + Registry            |
 | **IDE support**        | Good                       | Excellent                    | Excellent                     | Good                          |
 | **Learning curve**     | Steep                      | Moderate                     | Moderate                      | Low for Bicep users           |
@@ -48,9 +58,9 @@ See also: [Bicep](../bicep/) · [Terraform](../terraform/)
 
 ## Same Resource, Four Ways
 
-Deploy a Storage Account (Standard LRS, StorageV2) in each tool:
+Deploy a Storage Account (Standard LRS, StorageV2) in each tool — flip through the next four slides to compare them directly.
 
-### ARM Template (~20 lines)
+## ARM Template (~20 lines)
 
 ```json
 {
@@ -68,7 +78,7 @@ Deploy a Storage Account (Standard LRS, StorageV2) in each tool:
 }
 ```
 
-### Bicep (~10 lines)
+## Bicep (~10 lines)
 
 ```bicep
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
@@ -84,7 +94,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
 }
 ```
 
-### Terraform / azurerm (~9 lines)
+## Terraform / azurerm (~9 lines)
 
 ```hcl
 resource "azurerm_storage_account" "main" {
@@ -100,7 +110,7 @@ resource "azurerm_storage_account" "main" {
 }
 ```
 
-### Terraform / azapi (~12 lines)
+## Terraform / azapi (~12 lines)
 
 ```hcl
 resource "azapi_resource" "storage" {
@@ -121,13 +131,17 @@ resource "azapi_resource" "storage" {
 }
 ```
 
+## Field Names, Side by Side
+
 Field names mirror the Bicep/ARM API exactly in ARM, Bicep, and azapi — `minimumTlsVersion` instead of `min_tls_version`, `allowBlobPublicAccess` instead of `allow_nested_items_to_be_public`. Only `azurerm` renames fields to its own convention. See the [azapi module](../azapi/) for more.
 
-## Support for New Resources vs Many Providers
+## Support for New Resources
 
-**New resources:** new Azure features appear in ARM and Bicep on day 0 — the moment Microsoft ships a feature, the ARM API supports it. Terraform's `azurerm` provider typically follows within days to weeks, depending on maintainer availability. The `azapi` provider (maintained by Microsoft) closes this gap entirely by calling the ARM REST API directly.
+New Azure features appear in ARM and Bicep on day 0 — the moment Microsoft ships a feature, the ARM API supports it. Terraform's `azurerm` provider typically follows within days to weeks, depending on maintainer availability. The `azapi` provider (maintained by Microsoft) closes this gap entirely by calling the ARM REST API directly.
 
-**Many providers:** only Terraform / OpenTofu supports managing resources outside of Azure in the same workflow. Popular non-Azure providers include `aws`, `google`, `kubernetes`, `helm`, `vault`, `datadog`, and hundreds more.
+## Support for Many Providers
+
+Only Terraform / OpenTofu supports managing resources outside of Azure in the same workflow. Popular non-Azure providers include `aws`, `google`, `kubernetes`, `helm`, `vault`, `datadog`, and hundreds more.
 
 </div>
 
