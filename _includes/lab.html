@@ -1,0 +1,13 @@
+<div class="workshop-lab" id="{{ include.id }}" data-lang="{{ include.lang }}" data-checks='{{ include.checks | escape }}'>
+  <div class="workshop-lab-title">&#129514; Lab &mdash; {{ include.title }}</div>
+  <div class="workshop-lab-task">{{ include.task | markdownify }}</div>
+  <textarea class="workshop-lab-starter" hidden>{{ include.starter | escape }}</textarea>
+  <div class="workshop-lab-cm-mount"></div>
+  <div class="workshop-lab-actions">
+    <button type="button" class="btn btn-blue workshop-lab-check">Check my answer</button>
+    <button type="button" class="btn workshop-lab-reset">Reset</button>
+    <button type="button" class="btn btn-outline workshop-lab-solution-toggle">Show solution</button>
+  </div>
+  <div class="workshop-lab-results" aria-live="polite"></div>
+  <pre class="workshop-lab-solution" hidden><code>{{ include.solution | escape }}</code></pre>
+</div>

@@ -8,6 +8,9 @@ permalink: pretty
 
 theme: just-the-docs
 
+plugins:
+  - jekyll-redirect-from
+
 search_enabled: true
 heading_anchors: true
 back_to_top: true
