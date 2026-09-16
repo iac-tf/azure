@@ -28,6 +28,12 @@
   }
 }
 
+@media (max-width: 37.5rem) {
+  .workshop-present-overlay {
+    padding: $sp-4;
+  }
+}
+
 .workshop-present-chrome {
   display: flex;
   align-items: center;
@@ -54,13 +60,24 @@
 }
 
 .workshop-present-slide {
+  // The scroll container itself must be able to shrink below its content's
+  // height (min-height: 0) inside the overlay's column flex layout —
+  // without it, a flex item's default min-height: auto refuses to shrink,
+  // the container grows past the viewport instead of scrolling, and tall
+  // slides get silently clipped with no way to reach the rest.
   display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 900px;
-  margin: 0 auto;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
+
+  // The actual slide is centered *inside* the scroll container, via
+  // margin: auto, rather than the container itself using
+  // justify-content: center (which is what breaks the min-height trick).
+  .workshop-slide {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+  }
 
   h2 {
     margin-top: 0;
